@@ -57,6 +57,10 @@ const Home = () => {
     requestLocationPermission();
   }, []);
 
+  useEffect(() => {
+    fetchWeatherData(userLocation || (LondonCords as City));
+  }, [userLocation]);
+
   const requestLocationPermission = async () => {
     if (Platform.OS === 'ios') {
       getLocation();
@@ -110,14 +114,6 @@ const Home = () => {
   const toggleLocationModal = () => {
     bottomSheetRef.current?.expand();
   };
-
-  useEffect(() => {
-    if (selectedLocation) {
-      fetchWeatherData(selectedLocation);
-    } else if (userLocation) {
-      fetchWeatherData(userLocation);
-    }
-  }, [selectedLocation, userLocation]);
 
   const fetchWeatherData = async (city: City) => {
     setIsLoading(true);
